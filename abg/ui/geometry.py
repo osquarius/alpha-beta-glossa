@@ -17,3 +17,6 @@ class Position(object):
             int(self.width),
             int(self.height)
             )
+    
+    def __str__(self):
+        return f"positioned at ({self.x}, {self.y}), dimensions are {self.width} by {self.height}"

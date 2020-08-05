@@ -7,11 +7,13 @@ from abg.ui.constraints import Constraints
 class AlphaBetaGlossa(object):
 
 
-    def __init__(self, caption, fps=30):
+    def __init__(self, caption, fps=20):
         pygame.init()
         self.window = Window(640, 480, caption)
         self.running = False
         self.fps = fps
+        rectangle = ui.Rectangle(Constraints(0.5, 0.5, 0.5, 0.5))
+        self.window.add_component(rectangle)
     
     def __del__(self):
         pygame.quit()
