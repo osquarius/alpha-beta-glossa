@@ -1,6 +1,7 @@
 import pygame
 
 import abg.ui.component as ui
+import abg.ui.color as color
 from abg.ui.window import Window
 from abg.ui.constraints import Constraints
 
@@ -12,11 +13,17 @@ class AlphaBetaGlossa(object):
         self.window = Window(640, 480, caption)
         self.running = False
         self.fps = fps
-        rectangle = ui.Rectangle(Constraints(0.5, 0.5, 0.5, 0.5))
-        self.window.add_component(rectangle)
+        self.build_gui()
     
     def __del__(self):
         pygame.quit()
+    
+    def build_gui(self):
+        rectangle = ui.Rectangle(
+            constraints=Constraints(0.5, 0.5, 0.5, 0.5),
+            fill_color=color.random_color()
+            )
+        self.window.add_components(rectangle)
     
     def run(self):
         self.activate()

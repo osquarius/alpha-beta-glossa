@@ -8,13 +8,13 @@ class Window(object):
 
     def __init__(self, width, height, caption):
         pygame.display.set_caption(*caption)
-        self.gui = GraphicalInterface(width, height)
+        self.gui = GraphicalInterface(width, height, fill_color=color.WHITE)
         self.dimensions = None
         self.canvas = None
         self.resize(width, height)
     
-    def add_component(self, component):
-        self.gui.add_component(component)
+    def add_components(self, *components):
+        self.gui.add_components(*components)
 
     def resize(self, width, height):
         self.gui.set_mode(width, height)

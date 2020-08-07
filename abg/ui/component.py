@@ -3,19 +3,24 @@ import abc
 import pygame
 
 import abg.ui.color as color
+import abg.ui.attribute as attribute
 from abg.ui.geometry import Position
 from abg.ui.constraints import Constraints
 
 class Component(abc.ABC):
 
 
-    def __init__(self, constraints=Constraints()):
-        self.subcomponents = []
+    def __init__(self, *subcomponents, **attributes):
+        self.subcomponents = list(subcomponents)
         self.position = Position()
-        self.constraints = constraints
+        self.attributes = attributes
+        if attribute.CONSTRAINTS in self.attributes:
+            self.constraints = self.attributes[attribute.CONSTRAINTS]
+        else:
+            self.constraints = Constraints()
     
-    def add_component(self, component):
-        self.subcomponents.append(component)
+    def add_components(self, *components):
+        self.subcomponents.extend(components)
     
     def set_constraints(self, constraints):
         self.constraints = constraints
@@ -34,7 +39,6 @@ class Component(abc.ABC):
             component.draw(canvas)
     
     def apply_constraints(self, parent):
-        print(id(self), type(self))
         x = parent.x + (self.constraints.x - 0.5) * parent.width
         y = parent.y + (self.constraints.y - 0.5) * parent.height
         width = parent.width * self.constraints.width
@@ -42,7 +46,7 @@ class Component(abc.ABC):
         self.position = Position(x, y, width, height)
 
     def reposition(self, parent):
-        if parent and self.constraints:
+        if parent:
             self.apply_constraints(parent)
         for component in self.subcomponents:
             component.reposition(self.position)
@@ -52,25 +56,25 @@ class Component(abc.ABC):
 class GraphicalInterface(Component):
 
 
-    def __init__(self, width, height, background_color=color.WHITE):
-        super().__init__(Constraints(0.5, 0.5, 1.0, 1.0))
+    def __init__(self, width, height, *subcomponents, **attributes):
+        super().__init__(*subcomponents, **attributes)
         self.set_mode(width, height)
-        self.background_color = background_color
     
     def set_mode(self, width, height):
         self.reposition(Position(width // 2, height // 2, width, height))
     
     def render(self, canvas):
-        canvas.fill(self.background_color)
+        if attribute.COLOR in self.attributes:
+            canvas.fill(self.attributes[attribute.COLOR])
 
 
 
 class Rectangle(Component):
 
 
-    def __init__(self, constraints=Constraints(), fill_color=color.RED):
-        super().__init__(constraints)
-        self.fill_color = fill_color
+    def __init__(self, *subcomponents, **attributes):
+        super().__init__(*subcomponents, **attributes)
     
     def render(self, canvas):
-        pygame.draw.rect(canvas, self.fill_color, self.position.nw_anchor)
+        if attribute.COLOR in self.attributes:
+            pygame.draw.rect(canvas, self.attributes[attribute.COLOR], self.position.nw_anchor)
