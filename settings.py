@@ -1,2 +1,2 @@
 VOCABULARY = ""
-FONT = "abg/ui/font/arial.ttf"
+FONT = "fonts/cour.ttf"

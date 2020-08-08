@@ -1,7 +1,7 @@
 import pygame
 
-import abg.ui.component as ui
-import abg.ui.color as color
+from abg.ui import gui
+from abg.ui import colors
 from abg.ui.window import Window
 from abg.ui.constraints import Constraints
 
@@ -16,13 +16,15 @@ class AlphaBetaGlossa(object):
         self.build_gui()
     
     def __del__(self):
+        self.deactivate()
         pygame.quit()
     
     def build_gui(self):
-        rectangle = ui.Rectangle(
-            constraints=Constraints(0.5, 0.5, 0.5, 0.5),
-            fill_color=color.random_color()
+        rectangle = gui.Rectangle(
+            constraints=Constraints(0.5, 0.5, 0.9, 0.33),
             )
+        text = gui.Text("Μιλάτε ελληνικά;")
+        rectangle.add_components(text)
         self.window.add_components(rectangle)
     
     def run(self):

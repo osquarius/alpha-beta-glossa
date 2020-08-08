@@ -1,5 +1,0 @@
-CONSTRAINTS = "constraints"
-COLOR = "fill_color"
-ACTIVE_COLOR = "active_color"
-TEXT_COLOR = "text_color"
-ACTIVE_TEXT_COLOR = "active_text_color"

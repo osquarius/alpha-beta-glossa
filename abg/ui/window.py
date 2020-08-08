@@ -1,14 +1,14 @@
 import pygame
 
-import abg.ui.color as color
-from abg.ui.component import GraphicalInterface
+from abg.ui import colors
+from abg.ui.gui import GraphicalInterface
 
 class Window(object):
 
 
     def __init__(self, width, height, caption):
         pygame.display.set_caption(*caption)
-        self.gui = GraphicalInterface(width, height, fill_color=color.WHITE)
+        self.gui = GraphicalInterface(width, height, fill_color=colors.WHITE)
         self.dimensions = None
         self.canvas = None
         self.resize(width, height)
